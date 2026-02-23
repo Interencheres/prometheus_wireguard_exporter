@@ -176,8 +176,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
                 .long("extract_names_config_files")
                 .num_args(0..)
                 .env("PROMETHEUS_WIREGUARD_EXPORTER_CONFIG_FILE_NAMES")
-                .help("If set, the exporter will look in the specified WireGuard config file for peer names (must be in [Peer] definition and be a comment). Multiple files are supported.")
-                .use_value_delimiter(false))
+                .help("If set, the exporter will look in the specified WireGuard config file for peer names (must be in [Peer] definition and be a comment). Multiple files are supported (separated with `,`).")
+                .use_value_delimiter(true)
+                .value_delimiter(',')
+        )
         .arg(
             Arg::new("interfaces")
                 .short('i')
@@ -185,7 +187,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
                 .num_args(0..)
                 .env("PROMETHEUS_WIREGUARD_EXPORTER_INTERFACES")
                 .help("If set specifies the interface passed to the wg show command. It is relative to the same position config_file. In not specified, all will be passed.")
-                .use_value_delimiter(false))
+                .use_value_delimiter(false)
+        )
         .arg(
             Arg::new("export_latest_handshake_delay")
                 .short('d')
